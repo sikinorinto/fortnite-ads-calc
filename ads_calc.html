@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Fortnite ADS感度計算ツール</title>
+<style>
+    body { font-family: sans-serif; margin: 40px; background: #f8f9fa; }
+    h1 { color: #333; }
+    label { display: block; margin-top: 10px; }
+    input { padding: 5px; width: 120px; margin-top: 3px; }
+    button { margin-top: 15px; padding: 8px 15px; }
+    #result { margin-top: 20px; font-weight: bold; font-size: 1.2em; }
+</style>
+</head>
+<body>
+
+<h1>Fortnite ADS感度計算ツール（XY+DPI対応）</h1>
+
+<label>旧XY感度: <input type="number" id="old_xy" step="0.01"></label>
+<label>新XY感度: <input type="number" id="new_xy" step="0.01"></label>
+<label>旧ADS感度（％）: <input type="number" id="old_ads" step="0.01"></label>
+<label>旧DPI: <input type="number" id="old_dpi"></label>
+<label>新DPI: <input type="number" id="new_dpi"></label>
+
+<button onclick="calcADS()">計算する</button>
+
+<div id="result"></div>
+
+<script>
+function calcADS() {
+    const old_xy = parseFloat(document.getElementById('old_xy').value);
+    const new_xy = parseFloat(document.getElementById('new_xy').value);
+    const old_ads = parseFloat(document.getElementById('old_ads').value);
+    const old_dpi = parseFloat(document.getElementById('old_dpi').value);
+    const new_dpi = parseFloat(document.getElementById('new_dpi').value);
+
+    if (isNaN(old_xy) || isNaN(new_xy) || isNaN(old_ads) || isNaN(old_dpi) || isNaN(new_dpi)) {
+        document.getElementById('result').innerHTML = "⚠ すべての項目を入力してください。";
+        return;
+    }
+
+    const new_ads = (old_xy * old_ads * old_dpi) / (new_xy * new_dpi);
+    document.getElementById('result').innerHTML = `新ADS感度％: <strong>${new_ads.toFixed(2)}</strong>`;
+}
+</script>
+
+</body>
+</html>
